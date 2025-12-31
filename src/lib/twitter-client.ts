@@ -512,7 +512,10 @@ export class TwitterClient {
           const delaySecs = Number.isFinite(info.check_after_secs) ? Math.max(1, info.check_after_secs as number) : 2;
           await this.sleep(delaySecs * 1000);
 
-          const statusUrl = `${TWITTER_UPLOAD_URL}?${new URLSearchParams({ command: 'STATUS', media_id: mediaId })}`;
+          const statusUrl = `${TWITTER_UPLOAD_URL}?${new URLSearchParams({
+            command: 'STATUS',
+            media_id: mediaId,
+          }).toString()}`;
           const statusResp = await this.fetchWithTimeout(statusUrl, {
             method: 'GET',
             headers: this.getUploadHeaders(),
@@ -996,7 +999,7 @@ export class TwitterClient {
     });
 
     const queryId = await this.getQueryId('UserArticlesTweets');
-    const url = `${TWITTER_API_BASE}/${queryId}/UserArticlesTweets?${params}`;
+    const url = `${TWITTER_API_BASE}/${queryId}/UserArticlesTweets?${params.toString()}`;
 
     try {
       const response = await this.fetchWithTimeout(url, { method: 'GET', headers: this.getHeaders() });
@@ -1141,7 +1144,7 @@ export class TwitterClient {
         const queryIds = await this.getTweetDetailQueryIds();
 
         for (const queryId of queryIds) {
-          const url = `${TWITTER_API_BASE}/${queryId}/TweetDetail?${params}`;
+          const url = `${TWITTER_API_BASE}/${queryId}/TweetDetail?${params.toString()}`;
           const response = await this.fetchWithTimeout(url, {
             method: 'GET',
             headers: this.getHeaders(),
@@ -1604,7 +1607,7 @@ export class TwitterClient {
       const queryIds = await this.getSearchTimelineQueryIds();
 
       for (const queryId of queryIds) {
-        const url = `${TWITTER_API_BASE}/${queryId}/SearchTimeline?${params}`;
+        const url = `${TWITTER_API_BASE}/${queryId}/SearchTimeline?${params.toString()}`;
 
         try {
           const response = await this.fetchWithTimeout(url, {
@@ -1912,7 +1915,7 @@ export class TwitterClient {
       const queryIds = await this.getBookmarksQueryIds();
 
       for (const queryId of queryIds) {
-        const url = `${TWITTER_API_BASE}/${queryId}/Bookmarks?${params}`;
+        const url = `${TWITTER_API_BASE}/${queryId}/Bookmarks?${params.toString()}`;
 
         try {
           const response = await this.fetchWithTimeout(url, {

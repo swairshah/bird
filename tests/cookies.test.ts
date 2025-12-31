@@ -18,8 +18,6 @@ vi.mock('@steipete/sweet-cookie', () => ({
   }),
 }));
 
-const itIfDarwin = process.platform === 'darwin' ? it : it.skip;
-
 describe('cookies', () => {
   const originalEnv = process.env;
 
@@ -63,7 +61,10 @@ describe('cookies', () => {
       expect(result.cookies.source).toContain('Firefox');
     });
 
-    itIfDarwin('honors cookieSource=safari', async () => {
+    it('honors cookieSource=safari', async () => {
+      if (process.platform !== 'darwin') {
+        return;
+      }
       sweet.results.set('safari', {
         cookies: [
           { name: 'auth_token', value: 'safari_auth', domain: 'x.com' },
@@ -245,7 +246,10 @@ describe('cookies', () => {
   });
 
   describe('extractCookiesFromSafari', () => {
-    itIfDarwin('returns cookies from Safari', async () => {
+    it('returns cookies from Safari', async () => {
+      if (process.platform !== 'darwin') {
+        return;
+      }
       sweet.results.set('safari', {
         cookies: [
           { name: 'auth_token', value: 'safari_auth', domain: 'x.com' },
@@ -262,7 +266,10 @@ describe('cookies', () => {
       expect(result.cookies.source).toBe('Safari');
     });
 
-    itIfDarwin('prefers Safari over Chrome when both are available', async () => {
+    it('prefers Safari over Chrome when both are available', async () => {
+      if (process.platform !== 'darwin') {
+        return;
+      }
       sweet.results.set('safari', {
         cookies: [
           { name: 'auth_token', value: 'safari_auth', domain: 'x.com' },

@@ -136,11 +136,7 @@ async function readSnapshotFromDisk(cachePath: string): Promise<RuntimeQueryIdSn
   try {
     const raw = await readFile(cachePath, 'utf8');
     return parseSnapshot(JSON.parse(raw));
-  } catch (error) {
-    const code = error && typeof error === 'object' ? String((error as { code?: unknown }).code ?? '') : '';
-    if (code !== 'ENOENT') {
-      return null;
-    }
+  } catch {
     return null;
   }
 }
